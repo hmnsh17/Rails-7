@@ -6,8 +6,9 @@
     <%= csrf_meta_tags %>
     <%= csp_meta_tag %>
 
-    <%= stylesheet_link_tag "application", "data-turbo-track": "reload" %>
+    <%= stylesheet_link_tag "application" %>
     <%= javascript_importmap_tags %>
+    <%= javascript_include_tag  "application" %>
   </head>
 
   <body>
@@ -40,10 +41,13 @@
             <a class="nav-link disabled">Disabled</a>
           </li>
         </ul>
-        <form class="d-flex" role="search">
-          <input class="form-control me-2" type="search" placeholder="Search" aria-label="Search">
-          <button class="btn btn-outline-success" type="submit">Search</button>
-        </form>
+        <% if user_signed_in? %>
+          <%= current_user.email %> |
+          <%= link_to "Sign out", destroy_user_session_path, :method => :delete %>
+        <% else %>
+          <%= link_to "Sign in", new_user_session_path %><br />
+          <%= link_to "Opret", new_user_session_path %><br />
+        <% end %>
       </div>
     </div>
   </nav>
@@ -51,5 +55,10 @@
   <p class="alert"><%= alert %></p>
 
     <%= yield %>
+<script>
+  $(document).ready(function(){
+     alert('Jquery working');
+  });
+</script>
   </body>
 </html>
